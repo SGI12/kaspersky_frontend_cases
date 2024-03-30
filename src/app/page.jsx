@@ -70,7 +70,7 @@ const Home = () => {
 
 
       </div>
-      {popup && <div className='flex animate-slideIn flex-col justify-end pb-14 h-[150%] items-center w-full fixed bottom-0 backdrop-blur-2xl bg-bg-gray-blured right-auto max-w-screen-sm'>
+      {popup && <div className='flex animate-slideIn flex-col justify-center h-full items-center w-full fixed bottom-0 backdrop-blur-2xl bg-bg-gray-blured right-auto max-w-screen-sm'>
         <div className={`flex flex-col justify-center p-8 gap-4 items-center w-11/12 overflow-hidden rounded-[16px] bottom-0 max-w-screen-sm bg-white`}>
           <Image onClick={() => setPopup(false)} style={{ alignSelf: 'flex-end', cursor: 'pointer', }} width={16} height={16} alt='cross' src='/cross.png' />
           
