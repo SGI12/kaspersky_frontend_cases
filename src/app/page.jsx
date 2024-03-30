@@ -136,7 +136,7 @@ const Home = () => {
           </div>
           </div>
           <button onClick={BookClickHandler} className='w-full bg-orange-accent h-[56px] rounded-[20px] text-bg-white-styled text-[18px] active:bg-orange-primary '>Book</button>
-          {QRError && <div className='flex gap-1 items-center  text-error text-md '><Image src='/error_icon.png' alt='error icon' width={16} height={16}/> There's no QR in the picture</div>}
+          {QRError && <div className='flex gap-1 items-center  text-error text-md '><Image src='/error_icon.png' alt='error icon' width={16} height={16}/> There&apos;s no QR in the picture</div>}
         </div>
         
 
