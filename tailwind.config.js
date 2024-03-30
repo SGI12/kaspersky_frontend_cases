@@ -22,6 +22,23 @@ module.exports = {
         'bg-gray-blured': 'rgba(45,43,43,0.2)'
       }
     },
+    keyframes: {
+      slideInTop: {
+        "0%": {
+          transform:" translateY(-100%)",
+          opacity: 0
+        },
+        "100%": {
+          transform: "translateY(0)",
+          opacity: 1
+        }
+      }
+    },
+   
+    animation: {
+      slideIn: 'slideInTop 0.7s ease-in-out',
+      
+    }
   },
   plugins: [],
 };

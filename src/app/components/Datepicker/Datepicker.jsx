@@ -9,7 +9,7 @@ const inter = Inter({subsets: ['latin']})
 export default function Datepicker({showCalendar, setShowCalendar, setTimePicker}) {
   const [date, setDate] = useState(new Date())
   const [label, setLabel] = useState(new Date)
-  console.log(showCalendar)
+  
   
  
   return (

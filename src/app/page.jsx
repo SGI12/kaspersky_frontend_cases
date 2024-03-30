@@ -13,6 +13,15 @@ const Home = () => {
   const [showCalendar, setShowCalendar] = useState(false)
   const [timePicker, setTimePicker] = useState(false)
   const [pers, setPers] = useState(1)
+  const [phone, setPhone] = useState('')
+  const [liquidLabPopup, setLiquidLabPopup] = useState(false)
+  const phoneChangeHandler = (e) => {
+    
+  // мейби тут будет валиадация 
+
+      setPhone(e.target.value)
+ 
+  }
   const persClickHandler = () => {
     if (pers > 1) {
       setPers(pers-1)
@@ -61,7 +70,7 @@ const Home = () => {
 
 
       </div>
-      {popup && <div className='flex flex-col justify-center h-[100vh] items-center w-full fixed bottom-0 backdrop-blur-2xl bg-bg-gray-blured right-auto max-w-screen-sm'>
+      {popup && <div className='flex animate-slideIn flex-col justify-center h-[100vh] items-center w-full fixed bottom-0 backdrop-blur-2xl bg-bg-gray-blured right-auto max-w-screen-sm'>
         <div className={`flex flex-col justify-center p-8 gap-4 items-center w-11/12  rounded-[16px] bottom-0 max-w-screen-sm bg-white`}>
           <Image onClick={() => setPopup(false)} style={{ alignSelf: 'flex-end', cursor: 'pointer', }} width={16} height={16} alt='cross' src='/cross.png' />
           
@@ -73,7 +82,27 @@ const Home = () => {
               <span>{pers + ' Pers'}</span>
               <button onClick={() => setPers(pers+1)} className='bg-white w-[28px] h-[28px] rounded-full text-black text-[27px] active:bg-gray-200'>+</button>
           </div>
-
+          
+          {!showCalendar && !timePicker && <div className='flex flex-col gap-4 w-full'>
+            <input type="text" placeholder='Name' className='h-[56px] bg-gray-field w-full rounded-[20px] px-6 focus:outline-none text-gray-accent' />
+            <input type="text" placeholder='Lastname' className='h-[56px] bg-gray-field w-full rounded-[20px] px-6 focus:outline-none text-gray-accent' />
+            <input value={phone} type="tel" onChange={(e) => phoneChangeHandler(e)} placeholder='(---) --- ----' className='h-[56px] bg-gray-field w-full rounded-[20px] px-6 focus:outline-none text-gray-accent' />
+          </div>}
+          
+          {liquidLabPopup && <div className='flex flex-col animate-slideIn  top-8 justify-center items-center w-10/12 text-gray-accent text-[16px]  left-0 right-0 mx-auto p-6 drop-shadow-xl rounded-[10px] absolute bg-white'>
+          <Image onClick={() => setLiquidLabPopup(false)} style={{ alignSelf: 'flex-end', cursor: 'pointer', }} width={16} height={16} alt='cross' src='/cross.png' />
+            If you don't have a QR it can be made by following this link <a href="#" className='self-start underline' target="_blank" rel="noopener noreferrer">LiquidLab</a>
+          </div>}
+          
+          
+          <div className='w-full'>
+          
+          <button onClick={() => setLiquidLabPopup(true)} className=' flex justify-center gap-3 items-center w-full bg-transparent border-dashed h-[56px] text-[18px] border-orange-primary border-2 rounded-[20px] text-orange-accent'>
+          
+            Upload QR
+            <Image  src='/cloud_icon.png' alt='icon' width={28} height={28}/>
+          </button>
+          </div>
           <button onClick={() => setPopup(!popup)} className='w-full bg-orange-accent h-[56px] rounded-[20px] text-bg-white-styled text-[18px] active:bg-orange-primary '>Book</button>
         </div>
 
