@@ -63,15 +63,14 @@ const Home = () => {
   return (
     
     <main className="flex min-h-screen flex-col items-center justify-between">
-      <div>
       
-      </div>
       
-      <div className="hidden md:hidden absolute flex-col items-center justify-center gap-10 z-3 w-full h-full bg-white text-gray-accent ">
+    
+      <div className="hidden md:flex absolute flex-col items-center justify-center gap-10 z-10 w-full h-full bg-white text-gray-accent ">
         <h1 className={`${ephesis.className} text-[4.5vw]`} >Ei nabe Restaurant</h1>
         <h3 className='text-[2vw] font-bold'>Please open from your mobile device</h3>
       </div>
-      <div className='flex flex-col px-[16px] text-gray-accent items-start max-w-screen-sm w-full min-h-full pb-28'>
+      <div className='flex md:hidden flex-col px-[16px] text-gray-accent items-start max-w-screen-sm w-full min-h-full pb-28'>
         <h3 className={`${ephesis.className} text-[32px] py-8 border-b-2`}>
           Ei nabe Restaurant
         </h3>

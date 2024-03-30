@@ -13,7 +13,7 @@ export default function RootLayout({ children }) {
   
   return (
     <html lang="ru">
-      <body className={inter.className}>
+      <body className={`${inter.className}`}>
    
           {children}
     
