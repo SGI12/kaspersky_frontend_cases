@@ -42,7 +42,7 @@ const Home = () => {
 
           <p className='pb-2 pl-6'>Chilaquiles</p>
         </div>
-        <div className=" flex flex-col justify-end w-full h-[130px] mb-8 bg-no-repeat bg-cover rounded-[25px] text-bg-white-styled text-[24px] bg-center bg-[url('/Pozole.png')]">
+        <div className=" flex flex-col justify-end w-full h-[130px] mb-8 bg-no-repeat bg-cover rounded-[25px] text-bg-white-styled text-[24px] bg-center bg-[url('/pozole.png')]">
 
           <p className='pb-2 pl-6'>Pozole</p>
         </div>
