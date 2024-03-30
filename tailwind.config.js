@@ -36,7 +36,7 @@ module.exports = {
     },
    
     animation: {
-      slideIn: 'slideInTop 0.7s ease-in-out',
+      slideIn: "slideInTop 0.7s ease-in-out",
       
     }
   },
