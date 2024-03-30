@@ -1,6 +1,6 @@
 'use client'
 import { Ephesis } from 'next/font/google';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Image from 'next/image';
 import Datepicker from './components/Datepicker/Datepicker'
 import Timepicker from './components/Timepicker/Timepicker'
@@ -15,8 +15,14 @@ const Home = () => {
   const [pers, setPers] = useState(1)
   const [phone, setPhone] = useState('')
   const [liquidLabPopup, setLiquidLabPopup] = useState(false)
+  const [imgText, setImgText] = useState('Upload QR')
+  const [image, setImage] = useState(null)
+  const [liquidLabWasShown, setLiquidWasShown] = useState(false)
+  const [QRError, setQRError] = useState(false)
+  const [isSuccess, setSuccess] = useState(false)
+  const fileRef = useRef()
   const phoneChangeHandler = (e) => {
-    
+ 
   // мейби тут будет валиадация 
 
       setPhone(e.target.value)
@@ -28,7 +34,32 @@ const Home = () => {
     }
   }
 
-  
+  const UploadClickHandler = (e) => {
+    if (liquidLabWasShown) {
+      fileRef.current.click()
+      
+    }
+    else {
+      setLiquidLabPopup(true)
+      
+    }
+  }
+  const fileLoaderHandler = (e) => {
+    const file = e.target.files[0]
+    setImage(file)
+    setImgText(file.name)
+
+  }
+  // Условная валидация картинки
+  const BookClickHandler = () => {
+    if (!imgText) {
+      setQRError(true)
+    }
+    else {
+      setPopup(false)
+      setSuccess(true)
+    }
+  }
   return (
     
     <main className="flex min-h-screen flex-col items-center justify-between">
@@ -90,29 +121,41 @@ const Home = () => {
           </div>}
           
           {liquidLabPopup && <div className='flex flex-col animate-slideIn  top-8 justify-center items-center w-10/12 text-gray-accent text-[16px]  left-0 right-0 mx-auto p-6 drop-shadow-xl rounded-[10px] absolute bg-white'>
-          <Image onClick={() => setLiquidLabPopup(false)} style={{ alignSelf: 'flex-end', cursor: 'pointer', }} width={16} height={16} alt='cross' src='/cross.png' />
+          <Image onClick={() => {setLiquidLabPopup(false); setLiquidWasShown(true)}} style={{ alignSelf: 'flex-end', cursor: 'pointer', }} width={16} height={16} alt='cross' src='/cross.png' />
             If you don&apos;t have a QR it can be made by following this link <a href="#" className='self-start underline' target="_blank" rel="noopener noreferrer">LiquidLab</a>
           </div>}
           
           
           <div className='w-full'>
           
-          <button onClick={() => setLiquidLabPopup(true)} className=' flex justify-center gap-3 items-center w-full bg-transparent border-dashed h-[56px] text-[18px] border-orange-primary border-2 rounded-[20px] text-orange-accent'>
+          <div onClick={UploadClickHandler} className=' flex justify-center gap-3 items-center w-full bg-transparent border-dashed h-[56px] text-[18px] border-orange-primary border-2 rounded-[20px] text-orange-accent'>
           
-            Upload QR
+            <input hidden onChange={fileLoaderHandler} ref={fileRef} type="file" />
+            {imgText}
             <Image  src='/cloud_icon.png' alt='icon' width={28} height={28}/>
-          </button>
           </div>
-          <button onClick={() => setPopup(!popup)} className='w-full bg-orange-accent h-[56px] rounded-[20px] text-bg-white-styled text-[18px] active:bg-orange-primary '>Book</button>
+          </div>
+          <button onClick={BookClickHandler} className='w-full bg-orange-accent h-[56px] rounded-[20px] text-bg-white-styled text-[18px] active:bg-orange-primary '>Book</button>
+          {QRError && <div className='flex gap-1 items-center  text-error text-md '><Image src='/error_icon.png' alt='error icon' width={16} height={16}/> There's no QR in the picture</div>}
         </div>
-
+        
 
 
       </div>}
-      <div className={!popup ? `flex flex-col justify-center items-center w-full h-[136px] fixed bottom-0 max-w-screen-sm bg-white` : 'hidden'}>
+      {isSuccess && <div className='flex animate-slideIn  flex-col justify-center h-full items-center w-full fixed bottom-0 backdrop-blur-2xl bg-bg-gray-blured right-auto max-w-screen-sm'>
+        <div className={`flex flex-col justify-start h-5/6  p-8 gap-4 items-center w-11/12 overflow-hidden rounded-[16px] bottom-0 max-w-screen-sm bg-white`}>
+          <Image onClick={() => setSuccess(false)} style={{ alignSelf: 'flex-end', cursor: 'pointer', }} width={16} height={16} alt='cross' src='/cross.png' />
+          <Image src='/accept.png' alt='accept' width={130} height={130} style={{paddingTop: '200px'}}></Image>
+          <p className='text-green text-2xl text-center pt-5'>Your booking is on manual review</p>
+        </div>
+        
 
-        <button onClick={() => setPopup(!popup)} className='w-10/12 bg-orange-accent h-[56px] rounded-[20px] text-bg-white-styled text-[18px] active:bg-orange-primary '>Book</button>
-      </div>
+
+      </div>}
+      {!isSuccess && <div className={!popup ? `flex flex-col justify-center items-center w-full h-[136px] fixed bottom-0 max-w-screen-sm bg-white` : 'hidden'}>
+
+        <button onClick={() => setPopup(true)} className='w-10/12 bg-orange-accent h-[56px] rounded-[20px] text-bg-white-styled text-[18px] active:bg-orange-primary '>Book</button>
+      </div>}
       
       
     </main>

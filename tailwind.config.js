@@ -19,7 +19,9 @@ module.exports = {
         'bg-white-styled': '#FFFBF4',
         'gray-field': '#E8ECF2',
         'orange-primary': '#F9C253',
-        'bg-gray-blured': 'rgba(45,43,43,0.2)'
+        'bg-gray-blured': 'rgba(45,43,43,0.2)',
+        'error': '#B40D0D',
+        'green': "#3BBA26"
       }
     },
     keyframes: {
