@@ -7,6 +7,7 @@ const hours = ['', '', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', 
 const minutes = ['', '', '00', '10', '20', '30', '40', '50', '', '']
 const inter = Inter({ subsets: ['latin'] })
 
+// Я НЕ ЕБУ КАК СДЕЛАТЬ АЙОСОВСКИЕ ЧАСЫ НЕ ЧЕРЕЗ ВАНИЛЬКУ И КВЕРИСЕЛЕКТОРЫ, ПОЭТОМУ ПОКА ТАК 
 const Timepicker = ({timePicker, setTimePicker, setShowCalendar}) => {
 
 

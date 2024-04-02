@@ -13,21 +13,20 @@ const Home = () => {
   const [showCalendar, setShowCalendar] = useState(false)
   const [timePicker, setTimePicker] = useState(false)
   const [pers, setPers] = useState(1)
-  const [phone, setPhone] = useState('')
+ 
   const [liquidLabPopup, setLiquidLabPopup] = useState(false)
   const [imgText, setImgText] = useState('Upload QR')
   const [image, setImage] = useState(null)
   const [liquidLabWasShown, setLiquidWasShown] = useState(false)
   const [QRError, setQRError] = useState(false)
   const [isSuccess, setSuccess] = useState(false)
+  const [name, setName] = useState('')
+  const [lastName, setLastName] = useState('')
+  const [phone, setPhone] = useState('')
+  const [inputsInvalid, setInputsInvalid] = useState(false)
   const fileRef = useRef()
-  const phoneChangeHandler = (e) => {
- 
-  // мейби тут будет валиадация 
+  
 
-      setPhone(e.target.value)
- 
-  }
   const persClickHandler = () => {
     if (pers > 1) {
       setPers(pers-1)
@@ -35,11 +34,14 @@ const Home = () => {
   }
 
   const UploadClickHandler = (e) => {
+    
     if (liquidLabWasShown) {
+      setInputsInvalid(false)
       fileRef.current.click()
       
     }
     else {
+      
       setLiquidLabPopup(true)
       
     }
@@ -50,8 +52,16 @@ const Home = () => {
     setImgText(file.name)
 
   }
-  // Условная валидация картинки
-  const BookClickHandler = () => {
+  const checkValid = () => {
+    if ((name == '') || (lastName == '') || (phone == '') || (image == null)) {
+      return false
+    }
+    else {
+      return true
+    }
+  }
+  // Mock img QR validation
+  const ImgLoadErrorHandler = () => {
     if (!imgText) {
       setQRError(true)
     }
@@ -60,13 +70,28 @@ const Home = () => {
       setSuccess(true)
     }
   }
+
+  //Input validation on book button click
+
+  const BookClickHandler = () => {
+    if (checkValid()) {
+      setPopup(false)
+      setSuccess(true)
+    }
+    else {
+      setInputsInvalid(true)
+      setShowCalendar(false)
+      setTimePicker(false)
+    }
+  }
+
   return (
     
     <main className="flex min-h-screen flex-col items-center justify-between">
       
       
     
-      <div className="hidden md:flex absolute flex-col items-center justify-center gap-10 z-10 w-full h-full bg-white text-gray-accent ">
+      <div className="hidden md:flex absolute flex-col items-center justify-center gap-10 z-40 w-full h-full bg-white text-gray-accent ">
         <h1 className={`${ephesis.className} text-[4.5vw]`} >Ei nabe Restaurant</h1>
         <h3 className='text-[2vw] font-bold'>Please open from your mobile device</h3>
       </div>
@@ -100,8 +125,8 @@ const Home = () => {
 
 
       </div>
-      {popup && <div className='flex animate-slideIn flex-col justify-center h-full items-center w-full fixed bottom-0 backdrop-blur-2xl bg-bg-gray-blured right-auto max-w-screen-sm'>
-        <div className={`flex flex-col justify-center p-8 gap-4 items-center w-11/12 overflow-hidden rounded-[16px] bottom-0 max-w-screen-sm bg-white`}>
+      {popup && <div className='flex  flex-col justify-center h-full items-center w-full fixed bottom-0 backdrop-blur-2xl bg-bg-gray-blured right-auto max-w-screen-sm'>
+        <div className={`flex animate-slideIn flex-col justify-center p-8 gap-4 items-center w-11/12 overflow-hidden rounded-[16px] bottom-0 max-w-screen-sm bg-white`}>
           <Image onClick={() => setPopup(false)} style={{ alignSelf: 'flex-end', cursor: 'pointer', }} width={16} height={16} alt='cross' src='/cross.png' />
           
           
@@ -109,18 +134,19 @@ const Home = () => {
           <Timepicker timePicker={timePicker} setTimePicker={setTimePicker} setShowCalendar={setShowCalendar}/>
           <div  className='w-full bg-orange-primary flex justify-center items-center gap-[25px] h-[56px] rounded-[20px] text-bg-white-styled text-[18px] active:bg-orange-primary '>
              <button onClick={persClickHandler} className='bg-white w-[28px] h-[28px] rounded-full text-black text-[27px] active:bg-gray-200'>-</button>
-              <span>{pers + ' Pers'}</span>
+              <span>{pers + ' persons'}</span>
               <button onClick={() => setPers(pers+1)} className='bg-white w-[28px] h-[28px] rounded-full text-black text-[27px] active:bg-gray-200'>+</button>
           </div>
           
           {!showCalendar && !timePicker && <div className='flex flex-col gap-4 w-full'>
-            <input type="text" placeholder='Name' className='h-[56px] bg-gray-field w-full rounded-[20px] px-6 focus:outline-none text-gray-accent' />
-            <input type="text" placeholder='Lastname' className='h-[56px] bg-gray-field w-full rounded-[20px] px-6 focus:outline-none text-gray-accent' />
-            <input value={phone} type="tel" onChange={(e) => phoneChangeHandler(e)} placeholder='(---) --- ----' className='h-[56px] bg-gray-field w-full rounded-[20px] px-6 focus:outline-none text-gray-accent' />
+            <input onClick={() => setInputsInvalid(false)} onChange={(e) => setName(e.target.value)} value={name} type="text" placeholder='Name' className={name!=='' ? `h-[56px] bg-gray-field w-full rounded-[20px] px-6 focus:outline-none text-gray-accent` : `h-[56px] bg-gray-field w-full rounded-[20px] px-6 focus:outline-none text-gray-accent border-red-400 border border-solid`} />
+            <input onClick={() => setInputsInvalid(false)} onChange={(e) => setLastName(e.target.value)} value={lastName} type="text" placeholder='Lastname' className={lastName!=='' ? `h-[56px] bg-gray-field w-full rounded-[20px] px-6 focus:outline-none text-gray-accent` : `h-[56px] bg-gray-field w-full rounded-[20px] px-6 focus:outline-none text-gray-accent border-red-400 border border-solid`} />
+            <input onClick={() => setInputsInvalid(false)} onChange={(e) => setPhone(e.target.value)} value={phone} type="tel"  placeholder='(---) --- ----' className={phone!=='' ? `h-[56px] bg-gray-field w-full rounded-[20px] px-6 focus:outline-none text-gray-accent` : `h-[56px] bg-gray-field w-full rounded-[20px] px-6 focus:outline-none text-gray-accent border-red-400 border border-solid`} />
+            {inputsInvalid && <div className='flex animate-shake gap-1 self-center items-center text-error text-md '>Please fill in all the text fields and upload the image.</div>}
           </div>}
           
           {liquidLabPopup && <div className='flex flex-col animate-slideIn  top-8 justify-center items-center w-10/12 text-gray-accent text-[16px]  left-0 right-0 mx-auto p-6 drop-shadow-xl rounded-[10px] absolute bg-white'>
-          <Image onClick={() => {setLiquidLabPopup(false); setLiquidWasShown(true)}} style={{ alignSelf: 'flex-end', cursor: 'pointer', }} width={16} height={16} alt='cross' src='/cross.png' />
+          <Image onClick={() => {setLiquidLabPopup(false); setLiquidWasShown(true); }} style={{ alignSelf: 'flex-end', cursor: 'pointer', }} width={16} height={16} alt='cross' src='/cross.png' />
             If you don&apos;t have a QR it can be made by following this link <a href="#" className='self-start underline' target="_blank" rel="noopener noreferrer">LiquidLab</a>
           </div>}
           
@@ -144,7 +170,7 @@ const Home = () => {
       {isSuccess && <div className='flex animate-slideIn  flex-col justify-center h-full items-center w-full fixed bottom-0 backdrop-blur-2xl bg-bg-gray-blured right-auto max-w-screen-sm'>
         <div className={`flex flex-col justify-start h-5/6  p-8 gap-4 items-center w-11/12 overflow-hidden rounded-[16px] bottom-0 max-w-screen-sm bg-white`}>
           <Image onClick={() => setSuccess(false)} style={{ alignSelf: 'flex-end', cursor: 'pointer', }} width={16} height={16} alt='cross' src='/cross.png' />
-          <Image src='/accept.png' alt='accept' width={130} height={130} style={{paddingTop: '200px'}}></Image>
+          <Image src='/accept.png' alt='accept' width={130} height={130} style={{paddingTop: '50%'}}></Image>
           <p className='text-green text-2xl text-center pt-5'>Your booking is on manual review</p>
         </div>
         
