@@ -51,12 +51,22 @@ module.exports = {
         "40%, 60%": {
           transform: "translate3d(4px, 0, 0)"
         }
+      },
+      fadeIn: {
+        "0%": {
+          opacity: 0
+        },
+        "100%": {
+          opacity: 1
+        },
       }
     },
    
+   
     animation: {
       slideIn: "slideInTop 0.7s ease-in-out",
-      shake: "shake 1s cubic-bezier(.36,.07,.19,.97) both"
+      shake: "shake 1s cubic-bezier(.36,.07,.19,.97) both",
+      fadeIn: "fadeIn 0.5s ease"
       
     }
   },
